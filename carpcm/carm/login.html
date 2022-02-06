@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
+    <title>宁夏机动车检验协会</title>
+    <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+    </script>
+    <script>
+        if(!/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+            window.location.href = "http://47.94.99.243:8080/html/carpc/login.html"+location.search;
+        }
+        var rem=null;
+        //屏幕适应
+        (function (win, doc) {
+            if (!win.addEventListener) return;
+            var html = document.documentElement;
+            function setFont() {
+                var html = document.documentElement;
+                var k =750;
+                html.style.fontSize = html.clientWidth / k * 100 + "px";
+                rem=html.clientWidth / k * 100 ;
+            }
+            setFont();
+            setTimeout(function () {
+                setFont();
+            }, 300);
+            doc.addEventListener('DOMContentLoaded', setFont, false);
+            win.addEventListener('resize', setFont, false);
+            win.addEventListener('load', setFont, false);
+        })(window, document);
+    </script>
+    <style>
+        html{font-size:100px;}
+    </style>
+    <link rel="stylesheet" href="css/global.css?v1.3">
+    <link rel="stylesheet" href="css/login.css?v1.08">
+    <link rel="stylesheet" href="css/eject.css?v1.01">
+    <script src="js/request.js?v1.03"></script>
+    <script src="js/getTime.js?v1.01"></script>
+    <script src="js/element.js?v1.01"></script>
+    <link rel="stylesheet" href="css/element.css">
+</head>
+<body>
+<div id="app" :class="{'manheight':loginStatus==0}">
+    <my-header></my-header>
+    <div class="main" v-if="loginStatus==0">
+        <div class="logintitle">
+            <span>考试试题</span><span>登录</span>
+        </div>
+        <div class="more">
+            <div class="nav">
+                <p class="set flex flex-h flex-vc">
+                    <img src="images/iconcomputer.png" alt="iconcomputer" class="iconcomputer">
+                    <span id="papername" class="font1">选择试卷</span>
+                    </p>
+                <ul class="new">
+                    <li v-for="(paperitem,paperindex) of paperList" :key="paperindex">{{paperitem.name}}</li>
+                </ul>
+            </div>
+            <div class="inputwrap flex flex-h flex-vc">
+                <img src="images/iconperson.png" alt="iconperson">
+                <input class="font1" type="text" placeholder="请输入名字" v-model="name">
+            </div>
+            <div class="inputwrap flex flex-h flex-vc">
+                <img src="images/iconkey.png" alt="iconkey">
+                <input class="font1" type="text" placeholder="请输入考号" v-model="key">
+            </div>
+        </div>
+        <div class="dec flex flex-h flex-vc">
+            <img src="images/icone.png" alt="icone">
+            <div class="blue flex flex-h">输入<div>正确考生号</div>，进入考试</div>
+        </div>
+        <div class="btn pointer" @click="startGo">开始考试</div>
+    </div>
+    <div class="examinationWrap" v-else-if="loginStatus==1">
+        <div class="testhead">
+            志同而道合&nbsp;&nbsp;任重而道远
+        </div>
+        <div class="modtitle">考试题目</div>
+        <div class="questionWrap">
+            <div class="question" v-for="(questionItem,questionIndex) of questionList" :key="questionIndex">
+                <div class="questionTitle">{{(currentPage-1)*pageSize+questionIndex+1}}、{{questionItem.question}} <span> ？</span ><span class="blueFont">*</span></div>
+                <div class="options flex flex-v">
+                    <el-radio v-model="questionItem.option" label="A">{{questionItem.answerA}}</el-radio>
+                    <el-radio v-model="questionItem.option" label="B">{{questionItem.answerB}}</el-radio>
+                    <el-radio v-model="questionItem.option" label="C">{{questionItem.answerC}}</el-radio>
+                    <el-radio v-model="questionItem.option" label="D">{{questionItem.answerD}}</el-radio>
+                </div>
+            </div>
+            <div class="examinationFooter flex flex-h flex-hc">
+                <div class="examinationBtn pointer" v-if="currentPage!==1" @click="prevPage">上一页</div>
+                <div class="examinationBtn pointer" v-if="totalPage>currentPage" @click="nextPage">下一页</div>
+                <div class="examinationBtn examinationBtn2 pointer" v-if="totalPage==currentPage" @click="completeFn">提交答案</div>
+                <!--1 完成  isMore=0没有下一页-->
+                <!--2    下一页  有下一页-->
+                <!--3    上一页  下一页  有下一页，且currentPage!==1-->
+                <!--4 完成 没有下一页且currentPage!==1-->
+            </div>
+        </div>
+    </div>
+    <div class="examinationResult" v-else>
+            <div class="testhead">
+                志同而道合&nbsp;&nbsp;任重而道远
+            </div>
+            <div class="resultWrap">
+                <div class="modtitle">成绩单</div>
+                <div class="headwrap flex flex-h flex-hc">
+                    <div class="mod2">
+                        <div class="modright flex flex-hc flex-vc"><span class="s1">{{score}}</span>/<span class="s2">{{questionAll.length}}</span></div>
+                        <div class="modleft flex flex-v flex-hc flex-vc">
+                            您的得分
+                        </div>
+                    </div>
+                    <div class="mod2">
+                        <div class="modright flex flex-hc flex-vc"><span class="s1">{{score}}</span>/<span class="s2">{{questionAll.length}}</span></div>
+                        <div class="modleft  flex flex-v flex-hc flex-vc">
+                            答对题目
+                        </div>
+                    </div>
+                </div>
+                <div class="modtitle2" v-if="erroList.length>0">答案分析</div>
+                <div class="erroList">
+                    <div class="errowrap" v-for="(erroItem,erroIndex) of erroList" :key="erroIndex">
+                        <div class="question">{{erroItem.question}} ？ <span>[错选题]</span></div>
+                        <div class="option  flex flex-vc">您的回答：{{erroItem.option}}<span class="wrong">×</span></div>
+                        <div class="answer flex flex-vc"><span class="yes">正确答案：</span>{{erroItem.answer}}</div>
+                    </div>
+                </div>
+                </div>
+            </div>
+       <my-footer></my-footer>
+   </div>
+
+</div>
+<script src="js/component.js?v1.05"></script>
+<script src="js/eject.js"></script>
+<script>
+    // 下拉列表
+    var selectname=null;
+    var selectindex=null;
+    function settingSelect() {
+        $(".nav p").click(function() {
+            var ul = $(".new");
+            if (ul.css("display") == "none") {
+                ul.slideDown();
+            } else {
+                ul.slideUp();
+            }
+        });
+        $(".set").click(function() {
+            var _name = $(this).attr("name");
+            if ($("[name=" + _name + "]").length > 1) {
+                $("[name=" + _name + "]").removeClass("select");
+                $(this).addClass("select");
+            } else {
+                if ($(this).hasClass("select")) {
+                    $(this).removeClass("select");
+                } else {
+                    $(this).addClass("select");
+                }
+            }
+        });
+        $(".nav li").click(function() {
+            var li = $(this).text();
+            selectname=li;
+            selectindex=$(this).index();
+            // $(".nav p").html(li);
+            $("#papername").text(selectname)
+            $("#papername").addClass('black')
+            $(".new").hide();
+            $("p").removeClass("select");
+        });
+    }
+
+    var vm=new Vue({
+        el: '#app',
+        data: { //要存放的数据
+            loginStatus:0,//登录前
+            paperList:[],
+            name:'',
+            key:'',
+            // 考试题目列表 -s
+            currentPage:1,
+            totalPage:null,
+            pageSize:10,
+            isMore:null,
+            questionList:[],
+            questionAll:[],
+            // 考试题目列表 -e
+            // 考试结果 -s
+            score:null,
+            erroList:[
+                // {
+                //     question:'请问实际上是先有鸡还是先有蛋',
+                //     option:'A、先有鸡',
+                //     answer:'B、没有以上说法'
+                // },
+                // {
+                //     question:'请问实际上是先有鸡还是先有蛋2',
+                //     option:'A、先有鸡',
+                //     answer:'B、没有以上说法'
+                // },
+                // {
+                //     question:'请问实际上是先有鸡还是先有蛋3',
+                //     option:'A、先有鸡',
+                //     answer:'B、没有以上说法'
+                // }
+            ],
+            examinationTime:null,
+            papersName:null
+            // 考试结果 -e
+        },
+        methods:{
+            nextPage(){
+                // currentPage=1-2 all[] que10 all[10] que-=10
+                    let cur=this.currentPage
+                    let page=this.pageSize
+                    this.questionAll.splice((cur-1)*page,page,...Object.assign([],this.questionList));
+                    if(cur+1==this.totalPage){//尾页不足pagesize的情况
+                        this.questionList=this.questionAll.slice(cur*page);//第1页面点=》10-19
+                    }else{
+                        this.questionList=this.questionAll.slice((cur)*page,(cur+1)*page);//第1页面点=》10-19
+                    }
+                    this.currentPage=this.currentPage+1;//2页=上一页0-9  3=>10-19
+                },
+            prevPage(){
+                let cur=this.currentPage
+                let page=this.pageSize
+                this.questionAll.splice((cur-1)*page,this.questionList.length,...Object.assign([],this.questionList));
+                this.questionList=this.questionAll.slice((cur-2)*page,(cur-1)*page);
+                this.currentPage=this.currentPage-1;//2页=上一页0-9  3=>10-19
+            },
+            startGo(){
+                if(selectname==''||selectname==null||selectname==undefined){
+                   Ealert({
+                        title:'提示',
+                        message:'试卷还未选择！'
+                    })
+                    return;
+                }
+                if(this.name==''||this.name==null||this.name==undefined){
+                    Ealert({
+                        title:'提示',
+                        message:'名字不能为空！'
+                    })
+                    return;
+                }
+                if(this.key==''||this.key==null||this.key==undefined){
+                    Ealert({
+                        title:'提示',
+                        message:'考号不能为空！'
+                    })
+                    return;
+                }
+                this.getQuestions()
+            },
+            async requestHomeApi(){
+                let res=await request('get','/examinee/papers',{
+                    currentPage:0,
+                    pageSize:0
+                });
+                // alert('res:'+JSON.stringify(res));
+                if(res.code==1){
+                    let arr=res.data.items.map((item)=>{
+                        return{
+                            id:item.id,
+                            name:item.name
+                        }
+                    })
+                    this.paperList=arr;
+                    this.$nextTick(() => {
+                        settingSelect();
+                    })
+                }else{
+                    alert('数据获取失败！')
+                }
+
+            },
+            async getQuestions(){
+                let res=await request('get','/examinee',{
+                    currentPage:0,
+                    pageSize:0,
+                    name:this.name,
+                    examinationId:this.key,
+                    papersId:this.paperList[selectindex].id,
+                    // name:'李四',
+                    // examinationId:'4451212152511516265',
+                    // papersId:11
+                });
+                // alert('res:'+JSON.stringify(res));
+                if(res.code==1){
+                    let arr=res.data.items.map((item)=>{
+                        return{
+                            id:item.id,
+                            question:item.question,
+                            answerA:item.answerA,
+                            answerB:item.answerB,
+                            answerC:item.answerC,
+                            answerD:item.answerD,
+                            option:''
+                        }
+                    })
+                    this.questionAll=arr;
+                    this.questionList=arr.slice(0,this.pageSize);
+                    this.totalPage=parseInt(arr.length/this.pageSize)+1;
+                    this.isMore=res.data.isMore;
+                    this.loginStatus=1;
+                    this.$nextTick(() => {
+                        document.body.scrollTop = 0;
+                    });
+                }else{
+                    Ealert({
+                        title:'提示',
+                        message:'登录失败，请检查考号姓名是否对应考卷！'
+                    })
+                }
+
+            },
+            async postAnswer(list){
+                let data={
+                    examinationId:this.key,
+                    // examinationId:'4451212152511516265',
+                    list:list
+                }
+                let res=await request('post','/examinee',JSON.stringify(data))
+                if(res.code==1){
+                    let list=Object.assign([],res.data.list)
+                    let arr=list.map((item)=>{
+                        return{
+                            answer:item.answer,
+                            option:item.option,
+                            question:item.question
+                        }
+                    })
+                    this.erroList=arr;
+                    this.score=res.data.score;
+                    this.papersName=res.data.papers;
+                    this.examinationTime=getTransformTime1(res.data.examinationTime)
+                    this.loginStatus=2
+
+                    this.$nextTick(() => {
+                        document.body.scrollTop = 0;
+                    });
+                }else{
+                    Ealert({
+                        title:'提示',
+                        message:'提交失败！'
+                    })
+                }
+            },
+            completeFn(){//点击考试完成
+                // alert(JSON.stringify(this.questionList))
+                let arr=this.questionAll;//全部题目
+                let list=[]
+                for(var i in arr){
+                    if(arr[i].option==''||arr[i].option==null){
+                        Ealert({
+                            title:'提示',
+                            message:'您有题目未答，请认真检查！'
+                        })
+                        return;
+                    }
+                    list.push({
+                        questionId:arr[i].id,
+                        option:arr[i].option
+                    })
+                }
+                this.postAnswer(list);
+            }
+        },
+        created: function () {
+            this.requestHomeApi()
+        },
+        mounted:function () {
+                document.body.scrollTop = 0;
+        }
+    })
+    // 下拉列表
+
+</script>
+</body>
+</html>
+

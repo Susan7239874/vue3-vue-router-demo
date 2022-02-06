@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
+    <link rel="icon" href="images/tomaclogo.png" sizes="32x32">
+    <title>宁夏机动车检验协会</title>
+    <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+    </script>
+
+    <script>
+        (function () {
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+                var a = document.referrer, b = {
+                    "baidu.com": "seo_baidu",
+                    "sogou.com": "seo_sogou",
+                    "sm.cn": "seo_sm",
+                    "so.com": "seo_360",
+                    "bing.com": "seo_bing",
+                    "google.com": "seo_google"
+                }, c;
+                for (c in b) {
+                    if (-1 != a.indexOf(c)) {
+                        a = b[c];
+                        if (window.sessionStorage) {
+                            sessionStorage.setItem("channel", a)
+                        } else {
+                            var d = d || 0, b = "";
+                            0 != d && (b = new Date, b.setTime(b.getTime() + 1000 * d), b = "; expires=" + b.toGMTString());
+                            document.cookie = "channel=" + escape(a) + b + "; path=/"
+                        }
+                        break
+                    }
+                }
+                window.location.href = "http://47.94.99.243:8080/html/carm/index.html"+location.search;
+            };
+        })();
+        var rem=null;
+        //屏幕适应
+        (function (win, doc) {
+            if (!win.addEventListener) return;
+            var html = document.documentElement;
+            function setFont() {
+                var html = document.documentElement;
+                var k =1920;
+                html.style.fontSize = html.clientWidth / k * 100 + "px";
+                rem=html.clientWidth / k * 100 ;
+            }
+            setFont();
+            setTimeout(function () {
+                setFont();
+            }, 300);
+            doc.addEventListener('DOMContentLoaded', setFont, false);
+            win.addEventListener('resize', setFont, false);
+            win.addEventListener('load', setFont, false);
+        })(window, document);
+    </script>
+    <style>
+        html{font-size:100px;}
+    </style>
+    <link rel="stylesheet" href="css/global.css?v1.04">
+    <link rel="stylesheet" href="css/style.css?v1.04">
+    <script src="js/request.js?v1.04"></script>
+    <script src="js/getTime.js"></script>
+</head>
+<body>
+<div id="app">
+<div class="header">
+    <div class="title"><span>志同而道合</span><span>任重而道远</span></div>
+    <div class="searchbox flex flex-vc flex-h">
+        <img src="images/iconsearch.png" alt="iconsearch" class="iconsearch">
+        <input type="text" class="inputtext" placeholder="请输入姓名、单位或身份证号" v-model="content" @keyup.enter="goSearch">
+        <div class="flex flex-h flex-vc pointer" @click="goSearch"><span>查看信息</span><img src="images/iconright1.png" alt="iconright"></div>
+    </div>
+</div>
+    <div class="fixbox flex flex-h flex-vc flex-hbet" :class="[scrollHeight>0?'fixboxon':'']">
+        <img src="images/logo1.png" alt="logo" v-if="scrollHeight>0">
+        <img src="images/logo0.png" alt="logo" v-else>
+        <div class="chooses flex flex-h flex-vc">
+            <div class="one" v-on:mouseover="changeActive($event)" v-on:mouseout="removeActive($event)" @click="goRouter(0)">首页</div>
+            <div class="one" v-on:mouseover="changeActive($event)" v-on:mouseout="removeActive($event)" @click="goRouter(1)">成员列表</div>
+            <div class="one" v-on:mouseover="changeActive($event)" v-on:mouseout="removeActive($event)" @click="goRouter(2)">考试</div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="mod mod0 flex flex-h flex-hbet">
+            <div class="left">
+                <div class="modtitle">
+                    协会简介
+                </div>
+                <div class="texts">
+                    <p>宁夏机动车检验协会成立于2018年9月，由宁夏回族自治区内从事机动车检测业务的企业及相关行业内单位在平等、自愿基础上依法组成的具有法人资格的行业性、非营利性、全区性社会团体。目前拥有会员50余家，是宁夏回族自治区机动车检测行业唯一一家行业协会，协会工作一直以来得到主管部门、业内企业及社会各方人士的充分肯定。</p>
+                    <p>我协会一直秉承遵守中华人民共和国宪法、法律、法规和国家政策，践行社会主义核心价值观，遵守社会道德风尚，促进行业技术进步和管理现代化，维护行业业户的合法权益，发挥沟通、协调作用，当好政府进行行业管理的助手，致力建设统一、开放、竞争、有序的机动车检验市场，为我区交通安全把好关，为宁夏经济发展作出贡献。 </p>
+                    <p>展望未来，立足长远，我协会坚持履行“提供服务、反映诉求、规范行为、协调争议”的建会理念以执着的信念，坚定守护行业健康发展。 展望未来，立足长远，我协会坚持履行“提供服务、反映诉求、规范行为、协调争议”的建会理念以执着的信念，坚定守护行业健康发展。</p>
+                </div>
+            </div>
+            <div class="right">
+                <div class="modtitle">
+                    网站服务
+                </div>
+                <div class="boxs">
+                    <div class="one" v-on:mouseover="changeActive($event)" v-on:mouseout="removeActive($event)"  @click="goRouter(2)">
+                        <div class="pointer">考生考试</div>
+                    </div>
+                    <div class="one" v-on:mouseover="changeActive($event)" v-on:mouseout="removeActive($event)"  @click="goRouter(1)">
+                        <div class="pointer">成员查看</div>
+                    </div>
+                    <div class="one " v-on:mouseover="changeActive($event)" v-on:mouseout="removeActive($event)">
+                        <div class="pointer">业内新闻</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="mod  mod1">-->
+                 <!--<div class="modtitle">-->
+                     <!--技能总览-->
+                 <!--</div>-->
+            <!--<div class="iconsbox flex flex-vc">-->
+                <!--<img class="lefticon pointer" src="images/iconleft.png" alt="lefticon" @click="slidePrev()">-->
+                <!--<div class="icons">-->
+                    <!--<div class="iconswrap">-->
+                        <!--<div class="box" v-for="(iconitem,iconindex) of skillicons" :key="iconindex"-->
+                        <!--&gt;-->
+                            <!--<div class="one"-->
+                                 <!--v-on:mouseover="changeActive($event)" v-on:mouseout="removeActive($event)"-->
+                                 <!--v-on:mouseover="changeActive($event)" v-on:mouseout="removeActive($event)">-->
+                                <!--<img :src="iconitem.iconurl" alt="icon">-->
+                            <!--</div>-->
+                            <!--<div class="dec">{{iconitem.name}}</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<img class="righticon pointer"  src="images/iconright.png" alt="righticon" @click="slideNext()">-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="mod  mod2">
+            <div class="modtitle">
+                获取途径
+            </div>
+            <div class="text">
+                <span>*</span>报考协会的考试，通过考试后成为协会的成员，在官网的成员列表中可查看到技能标签
+            </div>
+        </div>
+        <div class="mod  mod3 flex flex-hbet">
+            <div class="left">
+                <div class="modtitle">
+                    热点新闻
+                </div>
+                <div class="more">
+                    <div class="new pointer"
+                         @click="goRouters('new.html',newitem.id)"
+                         v-for="(newitem,newindex) of newlist0"
+                         :key="newindex">
+                        <img :src="newitem.imgurl" alt="imgurl">
+                        <div class="title ellipsis">{{newitem.title}}</div>
+                        <div class="dec ellipsis2">{{newitem.dec}}</div>
+                        <div class="foot flex flex-hend">
+                            <div>进入阅读</div><img src="images/iconright2.png" alt="iconright2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <div class="modtitle">
+                    新闻列表
+                </div>
+                <div class="more">
+                    <div class="new flex pointer"
+                         @click="goRouters('new.html',new1item.id)"
+                         v-for="(new1item,new1index) of newlist1" :key="new1index">
+                        <div class="left">
+                            <div class="title ellipsis">{{new1item.title}}</div>
+                            <div class="dec ellipsis">{{new1item.dec}}</div>
+                            <div class="foot flex flex-h">
+                                <img src="images/iconclock.png" alt="iconclock">
+                                <div>{{new1item.date}}</div>
+                            </div>
+                        </div>
+                        <div class="right flex flex-vc">
+                            <img src="images/iconright.png" alt="iconright">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <my-footer></my-footer>
+</div>
+<script src="js/component.js?v1.03"></script>
+<script>
+    // 左右点击滑动
+    var nextnum=0;
+    function slideNextFn(){
+        if(nextnum>1){
+            return;
+        }
+        let num=1.54*rem;
+        $('.iconswrap').animate({left:"-="+num+"px"});
+        nextnum+=1;
+    }
+    function slidePrevFn(){
+        if(nextnum>2||nextnum<1){
+            return;
+        }
+        let num=1.54*rem;
+        $('.iconswrap').animate({left:"+="+num+"px"});
+        nextnum-=1;
+    }
+    // 左右点击滑动
+    var vm=new Vue({
+        el: '#app',
+        data: { //要存放的数据
+            content:null,
+            scrollHeight:0,//页面滚动的距离
+            skillicons:[
+                {
+                    iconurl:'images/iconskill0.png',
+                    name:'网络管理',
+                },
+                {
+                    iconurl:'images/iconskill1.png',
+                    name:'设备管理',
+                },
+                {
+                    iconurl:'images/iconskill2.png',
+                    name:'微机操作',
+                },
+                {
+                    iconurl:'images/iconskill3.png',
+                    name:'引车检验',
+                },
+                {
+                    iconurl:'images/iconskill4.png',
+                    name:'外观检验',
+                },
+                {
+                    iconurl:'images/iconskill5.png',
+                    name:'尾气检验',
+                },
+                {
+                    iconurl:'images/iconskill6.png',
+                    name:'档案管理',
+                },
+                {
+                    iconurl:'images/iconskill7.png',
+                    name:'路试检验',
+                },
+                {
+                    iconurl:'images/iconskill8.png',
+                    name:'底盘检验',
+                },
+            ],
+            newlist0:[
+                // {
+                //     imgurl:'images/testimg.png',
+                //     title:'习主席提出的四个“坚定不移”',
+                //     dec:'第一报道 | 习主席提出的四个“坚定不移”让世界感受到中国情谊、中国让世界感受到中国情谊、中国让世界感受到中国情谊、中国让世界感受到中国情谊、中国'
+                // },
+                // {
+                //     imgurl:'images/testimg.png',
+                //     title:'习主席提出的四个“坚定不移”',
+                //     dec:'第一报道 | 习主席提出的四个“坚定不移”让世界感受到中国情谊、中国让世界感受到中国情谊、中国让世界感受到中国情谊、中国让世界感受到中国情谊、中国'
+                // },
+                // {
+                //     imgurl:'images/testimg.png',
+                //     title:'习主席提出的四个“坚定不移”',
+                //     dec:'第一报道 | 习主席提出的四个“坚定不移”让世界感受到中国情谊、中国让世界感受到中国情谊、中国让世界感受到中国情谊、中国让世界感受到中国情谊、中国'
+                // },
+                // {
+                //     imgurl:'images/testimg.png',
+                //     title:'习主席提出的四个“坚定不移”',
+                //     dec:'第一报道 | 习主席提出的四个“坚定不移”让世界感受到中国情谊、中国让世界感受到中国情谊、中国让世界感受到中国情谊、中国让世界感受到中国情谊、中国'
+                // },
+                // {
+                //     imgurl:'images/testimg.png',
+                //     title:'习主席提出的四个“坚定不移”',
+                //     dec:'第一报道 | 习主席提出的四个“坚定不移”让世界感受到中国情谊、中国让世界感受到中国情谊、中国让世界感受到中国情谊、中国让世界感受到中国情谊、中国'
+                // },
+                // {
+                //     imgurl:'images/testimg.png',
+                //     title:'习主席提出的四个“坚定不移”',
+                //     dec:'第一报道 | 习主席提出的四个“坚定不移”让世界感受到中国情谊、中国让世界感受到中国情谊、中国让世界感受到中国情谊、中国让世界感受到中国情谊、中国'
+                // },
+                // {
+                //     imgurl:'images/testimg.png',
+                //     title:'习主席提出的四个“坚定不移”',
+                //     dec:'第一报道 | 习主席提出的四个“坚定不移”让世界感受到中国情谊、中国让世界感受到中国情谊、中国让世界感受到中国情谊、中国让世界感受到中国情谊、中国'
+                // },
+                // {
+                //     imgurl:'images/testimg.png',
+                //     title:'习主席提出的四个“坚定不移”',
+                //     dec:'第一报道 | 习主席提出的四个“坚定不移”让世界感受到中国情谊、中国让世界感受到中国情谊、中国让世界感受到中国情谊、中国让世界感受到中国情谊、中国'
+                // },
+                // {
+                //     imgurl:'images/testimg.png',
+                //     title:'习主席提出的四个“坚定不移”',
+                //     dec:'第一报道 | 习主席提出的四个“坚定不移”让世界感受到中国情谊、中国让世界感受到中国情谊、中国让世界感受到中国情谊、中国让世界感受到中国情谊、中国'
+                // }
+            ],
+            newlist1:[
+                // {
+                //     title:'习主席提出的四个“坚定不移”',
+                //     dec:'第一报道 | 习主席提出的四个“坚定不移”让世界感受到中国情谊、中国',
+                //     date:'2020年06月11日'
+                // },
+                // {
+                //     title:'习主席提出的四个“坚定不移”',
+                //     dec:'第一报道 | 习主席提出的四个“坚定不移”让世界感受到中国情谊、中国',
+                //     date:'2020年06月11日'
+                // },
+                // {
+                //     title:'习主席提出的四个“坚定不移”',
+                //     dec:'第一报道 | 习主席提出的四个“坚定不移”让世界感受到中国情谊、中国',
+                //     date:'2020年06月11日'
+                // },{
+                //     title:'习主席提出的四个“坚定不移”',
+                //     dec:'第一报道 | 习主席提出的四个“坚定不移”让世界感受到中国情谊、中国',
+                //     date:'2020年06月11日'
+                // },
+                // {
+                //     title:'习主席提出的四个“坚定不移”',
+                //     dec:'第一报道 | 习主席提出的四个“坚定不移”让世界感受到中国情谊、中国',
+                //     date:'2020年06月11日'
+                // },
+                // {
+                //     title:'习主席提出的四个“坚定不移”',
+                //     dec:'第一报道 | 习主席提出的四个“坚定不移”让世界感受到中国情谊、中国',
+                //     date:'2020年06月11日'
+                // }
+            ],
+            new0currentPage:1,
+            new0pageSize:9,
+            new1currentPage:1,
+            new1pageSize:6
+        },
+        methods:{
+            goRouters(path,id){//新闻跳转
+                window.location.href=allUrl+path+'?id='+id;
+            },
+            goRouter(index){//跳转
+                let gourl=null
+                if(index==0){
+                    gourl=homeUrl
+
+                }else if(index==1){
+                    gourl=memberListUrl
+                }else{
+                    gourl=loginUrl
+                }
+                if(window.location.href==gourl){
+                    return;
+                }
+                window.location.href=gourl
+            },
+            goSearch(){//搜索
+                let content=this.content;
+                if(content!==''&&content!==null){
+                    window.location.href=memberListUrl+'?content='+content
+                }else{
+                    window.location.href=memberListUrl
+                }
+
+            },
+            slideNext(){
+               slideNextFn()
+            },
+            slidePrev(){
+                slidePrevFn()
+            },
+            scrollfn(){//监测滚动距离
+                let that=this;
+                window.addEventListener("scroll", function () {//监测窗口自动滚动的情况，获得页面滚动距离
+                    let scroll=$(window).scrollTop();
+                    that.scrollHeight=scroll;
+                })
+            },
+            changeActive($event){
+                $event.currentTarget.className="one on";
+            },
+            removeActive($event){
+                $event.currentTarget.className="one";
+            },
+            async requestHomeApi(){
+
+                let res=await request('get','/news',{
+                    currentPage:this.new0currentPage,
+                    pageSize:this.new0pageSize,
+                    type:0
+                });
+
+                // alert('res:'+JSON.stringify(res));
+                if(res.code==1){
+                    let arr=res.data.items.map((item)=>{
+                        return{
+                            imgurl:item.photo,
+                            id:item.id,
+                            title:item.title,
+                            dec:'第一报道 | '+item.content
+                        }
+                    })
+                    this.newlist0=arr;
+                }else{
+                    alert('数据获取失败！')
+                }
+
+            },
+            async requestHomeApi2(){
+                let res=await request('get','/news',{
+                    currentPage:this.new1currentPage,
+                    pageSize:this.new1pageSize,
+                    type:1
+                });
+                // alert('res:'+JSON.stringify(res));
+                if(res.code==1){
+                    let arr=res.data.items.map((item)=>{
+                        return{
+                            id:item.id,
+                            title:item.title,
+                            dec:'第一报道 | '+item.content,
+                            date:getTransformTime2(item.createTime)
+                        }
+                    })
+                    this.newlist1=arr;
+                }else{
+                    alert('数据获取失败！')
+                }
+
+            },
+        },
+        created: function () {
+            this.scrollfn()
+            this.requestHomeApi()
+            this.requestHomeApi2()
+        },
+        mounted:function () {
+            document.documentElement.scrollTop = 0;
+        }
+    })
+
+    console.log(vm)
+</script>
+</body>
+</html>
+

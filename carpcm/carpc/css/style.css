@@ -1,0 +1,492 @@
+
+/*头部*/
+.header{
+    width:19.2rem;
+    height: 7.2rem;
+    background-image: url(../images/head.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    -webkit-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-position: center 0;
+    padding-top: 2.57rem;
+    box-sizing: border-box;
+}
+.header .title{
+    text-align: center;
+    font-size:0.53rem;
+
+    font-weight:400;
+    font-style:italic;
+    color:rgba(255,255,255,1);
+    line-height:0.53rem;
+    margin-bottom: 0.39rem;
+}
+.header .title span:nth-child(1){
+    padding-right:0.7rem;
+    /*letter-spacing:*/
+}
+.header .searchbox{
+    width: 11.14rem;
+    height: 0.51rem;
+    background:rgba(255,255,255,0.28);
+    margin:auto;
+}
+.searchbox input{
+   flex:1;
+    height:0.4rem;
+    line-height: 0.4rem;
+    background: transparent;
+    outline:none;
+    border: none;
+    font-size:0.16rem;
+
+    font-weight:400;
+    color:rgba(255,255,255,1);
+    margin:0 0.08rem;
+}
+input::-webkit-input-placeholder {
+    /* WebKit browsers */
+    font-size:0.16rem;
+
+    font-weight:400;
+    color:rgba(255,255,255,1);
+}
+input:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    font-size:0.16rem;
+
+    font-weight:400;
+    color:rgba(255,255,255,1);
+}
+input::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    font-size:0.16rem;
+
+    font-weight:400;
+    color:rgba(255,255,255,1);
+}
+input:-ms-input-placeholder {
+    /* Internet Explorer 10+ */
+    font-size:0.16rem;
+
+    font-weight:400;
+    color:rgba(255,255,255,1);
+}
+
+
+.searchbox .iconsearch{
+    width: 0.23rem;
+    height: 0.21rem;
+    margin-left:0.21rem;
+}
+.searchbox div img{
+    width: 0.06rem;
+    height: 0.1rem;
+    margin-right:0.34rem;
+    margin-left:0.09rem;
+}
+.searchbox div span {
+    font-size:0.16rem;
+
+    font-weight:bold;
+    color:rgba(255,255,255,1);
+    line-height:0.16rem;
+}
+/*头部*/
+
+/*浮动*/
+.fixbox{
+    position: fixed;
+    top:0;
+    left:0;
+    width: 19.2rem;
+    height: 0.74rem;
+    z-index: 10;
+}
+.fixboxon{
+    background: #ffffff;
+}
+.fixbox img{
+    width:2.71rem;
+    margin-left:3.12rem;
+}
+.fixbox .chooses{
+    margin-right:3.53rem;
+    height:100%;
+}
+.fixbox .chooses .one{
+    font-size:0.18rem;
+
+    font-weight:400;
+    text-align: center;
+    color:rgba(255,255,255,1);
+    position:relative;
+    cursor: pointer;
+}
+.fixbox .chooses .one:nth-child(n+1){
+    margin-right:0.69rem;
+}
+.fixboxon .chooses .one{
+    color:#353939;
+}
+.fixbox .chooses .on::after{
+    position: absolute;
+    content:'';
+    width:85%;
+    height:0.04rem;
+    background:#0001FD;
+    left:0;
+    right:0;
+    margin: auto;
+    bottom: -0.06rem;
+}
+
+/*浮动*/
+/*main*/
+.main{
+    width:12.71rem;
+    margin: auto;
+    padding-top: 0.56rem;
+}
+
+.mod0 .left{
+    width: 8.99rem;
+}
+.mod0 .left .texts{
+    margin-top:0.34rem;
+}
+.mod0 .left .texts p{
+    font-size:0.16rem;
+
+    font-weight:400;
+    color:rgba(37,41,43,0.8);
+    line-height:0.3rem;
+    text-indent: 0.3rem;
+}
+.mod0 .right{
+    width:3rem;
+}
+.mod0 .right .boxs{
+    margin-top:0.41rem;
+    width: 100%;
+}
+.mod0 .right .boxs .one{
+    width: 100%;
+    height: 0.72rem;
+    text-align: center;
+    font-size:0.2rem;
+
+    font-weight:400;
+    font-style:italic;
+    color:rgba(255,255,255,1);
+    background-repeat:no-repeat ;
+    background-size:100% 100%;
+    -webkit-background-size:100% 100%;
+    -o-background-size:100% 100%;
+    background-position: center 0;
+    margin-bottom:0.04rem;
+    position: relative;
+    z-index: 1;
+    display: box;              /* OLD - Android 4.4- */
+    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;      /* TWEENER - IE 10 */
+    display: -webkit-flex;     /* NEW - Chrome */
+    display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    /* 09版 */
+    -webkit-box-align: center;
+    /* 12版 */
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    -o-align-items: center;
+    align-items: center;
+}
+.mod0 .right .boxs .one div{
+    margin:auto;
+    position: relative;
+    z-index: 3;
+    display: inline-block;
+    height:0.2rem;
+    line-height: 0.2rem;
+}
+.mod0 .right .boxs .on div{
+    padding-bottom:3px;
+    border-bottom:1px solid rgba(255,255,255,1);
+}
+.mod0 .right .boxs .on::after{
+    content:'';
+    position: absolute;
+    left:0;
+    top:0;
+    width: 100%;
+    height:100%;
+    background:rgba(0,1,254,0.45);
+    z-index: 2;
+}
+.mod0 .right .boxs .one:nth-child(1){
+    background-image: url("../images/part0.jpg");
+}
+.mod0 .right .boxs .one:nth-child(2){
+    background-image: url("../images/part1.jpg");
+}
+.mod0 .right .boxs .one:nth-child(3){
+    background-image: url("../images/part2.jpg");
+}
+
+.mod1{
+    margin-top:0.55rem;
+}
+.mod1 .iconsbox{
+    margin-top:0.59rem;
+    width:12.71rem;
+    height:2.38rem;
+    border:1px solid rgba(0,0,0,0.11);
+}
+.mod1 .lefticon,.mod1 .righticon{
+    width:0.16rem;
+    height:0.29rem;
+}
+.mod1 .lefticon{
+    margin-left:0.34rem;
+    margin-right:0.34rem;
+}
+.mod1 .righticon{
+    margin-left:0.34rem;
+    margin-right:0.34rem;
+}
+.mod1 .icons{
+    width:11.15rem;
+    height:2.38rem;
+    overflow-x: hidden;
+}
+.mod1 .iconswrap{
+    position:relative;
+    width: 18rem;
+    height:2.38rem;
+    display: box;              /* OLD - Android 4.4- */
+    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;      /* TWEENER - IE 10 */
+    display: -webkit-flex;     /* NEW - Chrome */
+    display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    /* 09版 */
+    -webkit-box-align: center;
+    /* 12版 */
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    -o-align-items: center;
+    align-items: center;
+}
+/*.mod1 .icons::-webkit-scrollbar {display:none}*/
+.mod1 .icons .box{
+    width: 1.14rem;
+    height: 1.5rem;
+    margin-right:0.4rem;
+}
+.mod1 .icons .box:last-child{
+    position: relative;
+}
+.mod1 .icons .box:last-child::after{
+    content:'';
+    width: 1.14rem;
+    height: 1.5rem;
+    position: relative;
+}
+.mod1 .icons .box div.dec{
+    text-align: center;
+    font-size:0.14rem;
+
+    font-weight:400;
+    font-style:italic;
+    color:rgba(37,41,43,1);
+    line-height:0.14rem;
+    margin-top:0.22rem;
+}
+.mod1 .icons .one{
+    width: 1.14rem;
+    height: 1.14rem;
+    background-image:url("../images/skillbg0.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    -webkit-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-position: center 0;
+    display: box;              /* OLD - Android 4.4- */
+    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;      /* TWEENER - IE 10 */
+    display: -webkit-flex;     /* NEW - Chrome */
+    display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    /* 09版 */
+    -webkit-box-align: center;
+    /* 12版 */
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    -o-align-items: center;
+    align-items: center;
+    /* 09版 */
+    -webkit-box-pack: center;
+    /* 12版 */
+    -webkit-justify-content: center;
+    -moz-justify-content: center;
+    -ms-justify-content: center;
+    -o-justify-content: center;
+    justify-content: center;
+}
+
+.mod1 .icons .box:first-child{
+    margin-left:0.31rem;
+}
+.mod1 .icons .box:last-child{
+    margin-right:0.31rem;
+}
+.main .mod1 .icons .on{
+    background-image:url("../images/skillbg1.png");
+}
+
+.mod2{
+    width: 100%;
+    margin-top:0.52rem;
+}
+.mod2 .text{
+    margin-top:0.38rem;
+    font-size:0.16rem;
+
+    font-weight:400;
+   color:rgba(37, 41, 43,0.8);
+    line-height:0.16rem;
+}
+.mod2 .text span{
+    color:rgba(0,1,253,1);
+}
+.mod3{
+    margin-top:0.58rem;
+}
+.mod3 .left{
+    width: 9.04rem;
+}
+.mod3 .right{
+    width: 2.99rem;
+}
+.mod3 .left .more{
+    margin-top:0.53rem;
+}
+.mod3 .right .more{
+    margin-top:0.53rem;
+}
+.mod3 .left .more .new{
+    width: 2.87rem;
+    height:3.01rem;
+    float: left;
+    margin-right:0.2rem;
+    margin-bottom:0.37rem;
+}
+.mod3 .left .more .new:nth-child(3n){
+    margin-right:0;
+}
+.mod3 .left .new img{
+    width: 100%;
+    height:1.74rem;
+}
+.mod3 .left .new .title{
+    padding-left:0.03rem;
+    font-size:0.2rem;
+
+    font-weight:400;
+    font-style:italic;
+    color:rgba(37,41,43,1);
+    line-height:0.2rem;
+    margin-top:0.13rem;
+}
+.mod3 .left .new .dec{
+    padding-left:0.03rem;
+    letter-spacing:-1px;
+    width:2.57rem;
+    word-break:break-all;
+    font-size:0.14rem;
+
+    font-weight:400;
+    color:rgba(37,41,43,0.6);
+    line-height:0.2rem;
+    margin-top:0.07rem;
+}
+.mod3 .left .new .foot{
+    margin-top:0.14rem;
+    border-top:1px solid rgba(37,41,43,0.14);
+    padding-top:0.14rem;
+}
+.mod3 .left .new .foot div{
+    font-size:0.14rem;
+
+    font-weight:400;
+    color:rgba(37,41,43,0.6);
+    line-height:0.14rem;
+}
+.mod3 .left .new .foot img{
+    width: 0.13rem;
+    height: 0.11rem;
+    margin-left:0.08rem;
+}
+.mod3 .right .more .new{
+    width: 100%;
+    border-left:1px solid rgba(39,41,43,0.11);
+    border-right:1px solid rgba(39,41,43,0.11);
+    border-bottom:1px solid rgba(39,41,43,0.11);
+}
+.mod3 .right .more .new:first-child{
+    border-top:1px solid rgba(39,41,43,0.11);
+}
+.mod3 .right .more .new .left{
+    width:2.62rem;
+    height:100%;
+    box-sizing: border-box;
+    padding-left:0.24rem;
+    padding-top:0.23rem;
+}
+.mod3 .right .more .new .left .title{
+    font-size:0.16rem;
+
+    font-weight:400;
+    font-style:italic;
+    color:rgba(37,41,43,1);
+    line-height:0.16rem;
+}
+.mod3 .right .more .new .left .dec{
+    width: 1.82rem;
+    margin-top:0.07rem;
+    font-size:0.14rem;
+
+    font-weight:400;
+    color:rgba(37,41,43,0.5);
+    line-height:0.14rem;
+}
+.mod3 .right .more .new .left .foot{
+    font-size:0;
+    margin-top:0.12rem;
+    margin-bottom:0.23rem;
+}
+.mod3 .right .more .new .left .foot img{
+    display: inline-block;
+    width: 0.13rem;
+    height: 0.13rem;
+}
+.mod3 .right .more .new .left .foot div{
+    font-size:0.12rem;
+
+    font-weight:400;
+    color:rgba(37,41,43,0.5);
+    line-height:0.12rem;
+    padding-left:0.06rem;
+}
+.mod3 .right .more .new .right{
+    width: 0.37rem;
+}
+.mod3 .right .more .new .right img{
+    width: 0.14rem;
+    height: 0.28rem;
+}
+/*main*/

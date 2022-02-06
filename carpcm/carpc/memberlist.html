@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
+    <link rel="icon" href="images/tomaclogo.png" sizes="32x32">
+    <title>宁夏机动车检验协会</title>
+    <script src="js/vue.min.2.2.2.js"></script>
+    <script src="js/vue-resource.min.1.5.1.js"></script>
+    <script src="js/jquery.min.2.1.4.js"></script>
+    <script>
+        (function () {
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+                var a = document.referrer, b = {
+                    "baidu.com": "seo_baidu",
+                    "sogou.com": "seo_sogou",
+                    "sm.cn": "seo_sm",
+                    "so.com": "seo_360",
+                    "bing.com": "seo_bing",
+                    "google.com": "seo_google"
+                }, c;
+                for (c in b) {
+                    if (-1 != a.indexOf(c)) {
+                        a = b[c];
+                        if (window.sessionStorage) {
+                            sessionStorage.setItem("channel", a)
+                        } else {
+                            var d = d || 0, b = "";
+                            0 != d && (b = new Date, b.setTime(b.getTime() + 1000 * d), b = "; expires=" + b.toGMTString());
+                            document.cookie = "channel=" + escape(a) + b + "; path=/"
+                        }
+                        break
+                    }
+                }
+                window.location.href = "http://47.94.99.243:8080/html/carm/memberlist.html"+location.search;
+            };
+        })();
+        var rem=null;
+        //屏幕适应
+        (function (win, doc) {
+            if (!win.addEventListener) return;
+            var html = document.documentElement;
+            function setFont() {
+                var html = document.documentElement;
+                var k =1920;
+                html.style.fontSize = html.clientWidth / k * 100 + "px";
+                rem=html.clientWidth / k * 100 ;
+            }
+            setFont();
+            setTimeout(function () {
+                setFont();
+            }, 300);
+            doc.addEventListener('DOMContentLoaded', setFont, false);
+            win.addEventListener('resize', setFont, false);
+            win.addEventListener('load', setFont, false);
+        })(window, document);
+    </script>
+
+    <style>
+        html{font-size:100px;}
+    </style>
+    <link rel="stylesheet" href="css/global.css?v1.04">
+    <link rel="stylesheet" href="css/memberlist.css?v1.05">
+    <script src="js/request.js?v1.04"></script>
+    <script src="js/component.js?v1.03"></script>
+</head>
+<body>
+<div id="app">
+    <div class="porbox">
+        <my-header></my-header>
+        <my-input :content="content" @gosearch="gosearch"></my-input>
+        <div class="main hidden">
+            <div class="modtitle">成员列表 <div class="absolutebox" v-if="memberlist.length>0">搜索结果：{{totalNum}}</div></div>
+            <div class="memberwrap flex flex-h flex-hw">
+                <div class="member"
+                     v-if="memberlist.length>0"
+                     v-for="(memberitem,memberindex) of memberlist"
+                     :key="memberindex"
+                     v-on:mouseover="changeActive($event)"
+                     v-on:mouseout="removeActive($event)"
+                     @click="goRouter(memberitem.id)"
+                >
+                    <div class="top flex flex-hend">
+                        <img :src="memberitem.imgurl" alt="imgurl">
+                    </div>
+                    <div class="blue"></div>
+                    <div class="bottom">
+                        <div class="name">{{memberitem.name}}</div>
+                        <div class="dec">车辆管理师傅</div>
+                        <div class="dec">{{memberitem.company}}</div>
+                    </div>
+                </div>
+                <div v-if="memberlist.length==0" class="sorrry">抱歉，没有搜索到任何结果！</div>
+            </div>
+        </div>
+        <!--    分页器 -S-->
+        <div class="panationwrap">
+            <el-pagination
+                    align='right'
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-sizes="[10,20,30,40,50,60,70,80,100]"
+                    :page-size="pageSize"
+                    layout="prev, pager, next"
+                    :total="totalNum">
+            </el-pagination>
+        </div>
+        <!--    分页器 -E-->
+    </div>
+
+    <my-footer></my-footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+<script>
+    var vm=new Vue({
+        el: '#app',
+        watch:{
+            pageSize(newValue,oldValue){
+                if(newValue!==oldValue){
+                    this.requestHomeApi()
+                }
+            }
+        },
+        data: { //要存放的数据
+            key:null,//暂存搜索数据
+            content:null,//搜索框
+            // 搜索相关数据 -s
+            totalNum:null,//总条数
+            pageSize:12,//每页显示的总条数
+            currentPage:1,//当前页
+            memberlist:[]
+            //     [
+            //         {
+            //         name:'任烁',
+            //         imgurl:'images/testavator.png',
+            //         company:'陕西外远汽车检测修造有限公司',
+            //         skills:[
+            //             {
+            //                 date:'2020年02月03日',
+            //                 skill:'车辆管理',
+            //             }
+            //         ],
+            //     },
+       // {
+            //             name:'任烁',
+            //             imgurl:'images/testavator.png',
+            //             company:'陕西外远汽车检测修造有限公司',
+            //             skills:[
+            //                 {
+            //                     date:'2020年02月03日',
+            //                     skill:'车辆管理',
+            //                 }
+            //             ],
+            //         }
+            // ]
+        },
+        methods:{
+            changeActive($event){
+                $event.currentTarget.className="member on";
+            },
+            removeActive($event){
+                $event.currentTarget.className="member";
+            },
+            goRouter(id){//跳转去详情页
+              window.location.href=memberDetailUrl+'?id='+id
+            },
+            gosearch(content){//子组件点击搜索--触发父组件，得到子组件的输入框的值
+                this.content=content;
+                if(this.key==this.content&&this.key!==''&&this.key!==null){//重复搜索
+                    return;
+                }
+                this.requestHomeApi(content)
+            },
+            async requestHomeApi(content){
+                let res=await request('get','/user',{
+                    currentPage:this.currentPage,
+                    pageSize:this.pageSize,
+                    text:content?content:''
+                });
+                // alert('res:'+JSON.stringify(res));
+                if(res.code==1){
+                    this.currentPage=res.data.currentPage
+                    this.pageSize=res.data.pageSize
+                    this.totalNum=res.data.totalNum
+                    let list=Object.assign([],res.data.items)
+                    let arr=list.map((item ,index)=>{
+                        return{
+                            id:item.mainUser.id,
+                            name:item.mainUser.name,
+                            company:item.mainUser.unit,
+                            imgurl:item.mainUser.avatar
+                        }
+                    })
+                    this.memberlist=arr;
+                    if(content!==undefined){
+                        this.key=content;
+                    }
+                    $('.main').removeClass('hidden');
+                }else{
+                    Ealert({
+                        title:'提示',
+                        message:'数据请求失败，请稍后再试！'
+                    })
+                }
+            },
+            // 分页器 -S
+            handleSizeChange(val) {//pageSize 改变时会触发
+                console.log(`每页 ${val} 条`);
+                this.currentPage = 1;
+                this.pageSize = val;
+            },
+            handleCurrentChange(val) {//currentPage 改变时会触发
+                console.log(`当前页: ${val}`);
+                this.currentPage = val;
+                this.requestHomeApi()
+            },
+            // 分页器 -E
+        },
+        created: function () {
+            let content=getQueryString('content')
+            if(content==null){
+                this.requestHomeApi()
+            }else{
+                this.requestHomeApi(content)
+            }
+        },
+        mounted:function () {
+            document.documentElement.scrollTop = 0;
+        }
+    })
+
+</script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+</body>
+</html>
+
